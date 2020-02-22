@@ -37,12 +37,6 @@ RUN curl -SL --output dotnet.tar.gz https://dotnetcli.blob.core.windows.net/dotn
     && rm dotnet.tar.gz \
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
 	
-# Install TensorFlow
-
-RUN curl -SL --output libtensorflow.so https://allisterb-sylvester.s3.us-east-2.amazonaws.com/libtensorflow.so \
-&& curl -SL --output libtensorflow_framework.so.2.0.0 https://allisterb-sylvester.s3.us-east-2.amazonaws.com/libtensorflow_framework.so.2.0.0 \
-&& cp libtensorflow.so /usr/local/lib/libTensorFlow && cp libtensorflow.so /usr/local/lib/TensorFlow && cp libtensorflow.so /usr/local/lib/TensorFlow.so \
-&& cp libtensorflow_framework.so.2.0.0 /usr/local/lib/ && cp libtensorflow_framework.so.2.0.0 /usr/local/lib/libtensorflow_framework.so.2
 # Enable detection of running in a container
 ENV DOTNET_RUNNING_IN_CONTAINER=true \
     # Enable correct mode for dotnet watch (only mode supported in a container)
@@ -54,10 +48,6 @@ ENV DOTNET_RUNNING_IN_CONTAINER=true \
 
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help
-
-# Copy notebooks
-
-COPY ./notebooks/ ${HOME}/notebooks/
 
 # Copy package sources
 
@@ -72,13 +62,6 @@ RUN dotnet tool install -g dotnet-interactive --add-source "https://dotnet.myget
 ENV PATH="${PATH}:${HOME}/.dotnet/tools"
 RUN echo "$PATH"
 
-ENV LIBRARY_PATH="${LIBRARY_PATH}:/usr/local/lib"
-
-ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/local/lib"
-
-RUN echo "LIBRARY_PATH=$LIBRARY_PATH"
-
-RUN echo "LD_LIBRARY_PATH=$LD_LIBRARY_PATH"
 # Install kernel specs
 RUN dotnet interactive jupyter install
 
