@@ -46,6 +46,9 @@ ENV DOTNET_RUNNING_IN_CONTAINER=true \
     # Opt out of telemetry until after we install jupyter when building the image, this prevents caching of machine id
     DOTNET_TRY_CLI_TELEMETRY_OPTOUT=true
 
+# Copy notebooks
+COPY ./Notebooks/ ${HOME}/Notebooks/
+
 # Copy package sources
 COPY ./NuGet.config ${HOME}/nuget.config
 
