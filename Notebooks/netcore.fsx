@@ -2,7 +2,7 @@ open System.IO
 open Microsoft.FSharp.Quotations
 
 open Sylvester
-open FormulaDescriptions
+open Descriptions
 
 let registerExpr (expr:Expr) (writer:TextWriter) = 
     writer.Write(expr.ToString())
